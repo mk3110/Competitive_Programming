@@ -2,7 +2,7 @@
 #include<stack>
 #include<string>
 using namespace std;
-bool check(string exp){
+bool check(string exp) {
 	stack <char> s;
 	for(unsigned int i=0;i<exp.length();i++){
 		if(exp[i]=='('||exp[i]=='{'||exp[i]=='[')
