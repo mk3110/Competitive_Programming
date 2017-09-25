@@ -1,37 +1,37 @@
-#include<iostream>
-#include<string>
-#include<algorithm>
+#include <bits/stdc++.h>
 using namespace std;
-int findLCS(string str,string revstr){
-	int string_length1=str.size()+1;
-	int string_length2=revstr.size()+1;
-	int table[string_length1][string_length2];
-	for(int i=0;i<string_length1;i++){
-		table[i][0]=0;
+
+int dp[5005][5005];
+string str1,str2;
+
+int lcs(int len1,int len2){
+	if(len1==-1||len2==-1)
+		return 0;
+	else if(dp[len1][len2]!=-1)
+		return dp[len1][len2];
+	else if(str1[len1]==str2[len2]){
+		dp[len1][len2]=1+lcs(len1-1,len2-1);
+		return dp[len1][len2];
 	}
-	for(int i=0;i<string_length2;i++){
-		table[0][i]=0;
+	else{
+		dp[len1][len2]=max(lcs(len1,len2-1),lcs(len1-1,len2));
+		return dp[len1][len2];
 	}
-	for(int i=1;i<string_length1;i++){
-		for(int j=1;j<string_length2;j++){
-			if(str[i-1]==revstr[j-1])
-				table[i][j]=table[i-1][j-1]+1;
-			else
-				table[i][j]=max(table[i-1][j],table[i][j-1]);
-		}
-	}
-	return table[string_length1-1][string_length2-1];
 }
+		
 int main(){
 	int test;
-	cin>>test;
+	scanf("%d",&test);
 	while(test--){
-		string str1,str2;
 		cin>>str1;
 		str2=str1;
 		reverse(str2.begin(),str2.end());
-		int string_length=str1.size();
-		cout<<string_length-findLCS(str1,str2)<<endl;
-	}
+		memset(dp,-1,sizeof dp);
+		int len1=str1.size();
+		int len2=str2.size();
+		int ans=lcs(len1-1,len2-1);
+		printf("%d\n",len1-ans);
+	}	
 	return 0;
 }
+

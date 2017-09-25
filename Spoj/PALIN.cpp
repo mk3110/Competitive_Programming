@@ -1,32 +1,52 @@
 #include <bits/stdc++.h>
 using namespace std;
- 
-typedef long long ll;
- 
-ll reverse(ll n){
-	ll i=n+1;
-	while(1){
-		ll temp=i;
-		ll x=0,y=0;
-		while(temp!=0){
-			x=temp%10;
-			y=y*10+x;
-			temp/=10;
+
+string str;
+
+void nextpalin(){
+	int carry=0,temp=0;
+	int len=str.size();
+	len--;
+	if(len%2==0){
+		for(int i=0;i<=len/2;i++){
+			if(str[i]!=str[len-i]){
+				if(int(str[i])<int(str[len-i])){
+					temp=int(str[len-i]-'0');
+					carry=1;
+					if(temp==9)
+						str[len-i]='0';
+					else
+						str[len-i]=str[i];
+					for(int j=len-i-1;j>=0;j--){
+						if(carry==0)
+							break;
+						temp=int(str[j]-'0');		
+						if(temp==9)
+							str[j]='0';
+						else{
+							str[j]=int(str[j])+1;
+							carry=0;
+						}
+					
+					}
+				}
+				else
+					str[len-i]=int(str[len-i])+1;
+			}
 		}
-		if(y==i)
-			return i;
-		i++;
+	}
+	else{
+		
 	}
 }
- 
+		
 int main(){
 	int test;
 	scanf("%d",&test);
 	while(test--){
-		ll n;
-		scanf("%lld",&n);
-		ll ans=reverse(n);
-		printf("%lld\n",ans);
+		cin>>str;
+		nextpalin();
+		cout<<str<<endl;
 	}
 	return 0;
-} 
+}	
