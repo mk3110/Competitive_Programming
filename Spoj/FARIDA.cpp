@@ -1,25 +1,35 @@
-#include<iostream>
+#include <bits/stdc++.h>
 using namespace std;
+
+typedef long long ll;
+
+const int siz=1e4+4;
+int arr[siz];
+
 int main(){
 	int test;
-	cin>>test;
-	int c=0;
+	scanf("%d",&test);
+	int count=0;
 	while(test--){
-		c++;
+		count++;
 		int n;
-		cin>>n;
-		long long int inc=0,ex=0,temp=0,x=0;
+		scanf("%d",&n);
+		for(int i=0;i<n;i++)
+			scanf("%d",&arr[i]);
+		ll curr_val=0,mx=0,priv_sum=0,temp=0;
 		for(int i=0;i<n;i++){
-			cin>>x;
-			if(x+ex>=inc){
-				temp=inc;
-				inc=x+ex;
-				ex=temp;
+			curr_val=arr[i];
+			if(curr_val+priv_sum>mx){
+				temp=mx;
+				mx=curr_val+priv_sum;
+				priv_sum=temp;
 			}
 			else
-				ex=inc;
+				priv_sum=mx;
 		}
-		cout<<"Case "<<c<<": "<<inc<<endl;
+		printf("Case %d: %lld\n",count,mx);
 	}
 	return 0;
 }
+	 
+		
