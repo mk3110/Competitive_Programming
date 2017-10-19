@@ -70,6 +70,25 @@ node query(int low,int high,int start,int en,int pos){
         return merg(a,b);
     }
 }
+
+void update(int low,int high,int start,int en,int pos,int val){
+	if(low>en||high<start)
+		return ;
+	if(low==high){
+		tree[pos].l_sum=val;
+		tree[pos].r_sum=val;
+		tree[pos].t_sum=val;
+		tree[pos].b_sum=val;
+		return ;
+	}
+	int mid=(low+high)/2;
+	int left=2*pos+1;
+	int right=2*pos+2;
+	update(low,mid,start,en,left,val);
+	update(mid+1,high,start,en,right,val);
+	tree[pos]=merg(tree[left],tree[right]);
+	return ;
+}		
  
 int main(){
     int num;
@@ -80,10 +99,19 @@ int main(){
     int q;
     scanf("%d",&q);
     while(q--){
-        int start,en;
-        scanf("%d %d",&start,&en);  
-        node ans=query(0,num-1,start-1,en-1,0);
-        printf("%d\n",ans.b_sum);
+        int sign;
+	scanf("%d",&sign);
+	if(sign==1){
+		int start,en;
+		scanf("%d %d",&start,&en);
+        	node ans=query(0,num-1,start-1,en-1,0);
+        	printf("%d\n",ans.b_sum);
+	}
+	else{
+		int ind,val;
+		scanf("%d %d",&ind,&val);
+		update(0,num-1,ind-1,ind-1,0,val);
+	}
     }
     return 0;
 }
